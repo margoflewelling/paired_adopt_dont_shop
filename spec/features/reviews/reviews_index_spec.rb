@@ -37,6 +37,24 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
 
     expect(page).to_not have_content (@review_2.title)
     expect(page).to_not have_content (@review_2.rating)
+  end
 
+  it "can add a new review for a shelter" do
+    visit "/shelters/#{@shelter_1.id}"
+
+    click_link "Add New Review"
+
+    expect(page).to have_current_path("/shelters/#{@shelter_1.id}/review/new")
+
+    fill_in('title', :with => "Andy's Test Review")
+    fill_in('rating', :with => "4 Stars")
+    fill_in('content', :with => "Lorem Ipsum dog stuff")
+    fill_in('image', :with => "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg")
+    click_button "Save Review"
+
+    expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
+    expect(page).to have_content ("Andy's Test Review")
+    expect(page).to have_content ("4 Stars")
+    expect(page).to have_content ("Lorem Ipsum dog stuff")
   end
 end
