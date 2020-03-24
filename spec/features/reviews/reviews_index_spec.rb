@@ -14,12 +14,12 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
                                 state: "OH",
                                 zip: "43812")
 
-    @review_1 = Review.create(title: "Found my forever friend!",
+    @review_1 = Review.create!(title: "Found my forever friend!",
                               rating: "5 stars",
                               content: "They have great volunteers & staff at Henry's, adopted my first dog here!",
                               image: "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg",
                               shelter_id: @shelter_1.id)
-    @review_2 = Review.create(title: "Excellent!",
+    @review_2 = Review.create!(title: "Excellent!",
                               rating: "Would recommend",
                               content: "They always have the best selection of dogs here!",
                               shelter_id: @shelter_2.id)
@@ -43,7 +43,6 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     visit "/shelters/#{@shelter_1.id}"
 
     click_link "Add New Review"
-
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/review/new")
 
     fill_in('title', :with => "Andy's Test Review")
@@ -51,7 +50,6 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     fill_in('content', :with => "Lorem Ipsum dog stuff")
     fill_in('image', :with => "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg")
     click_button "Save Review"
-
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
     expect(page).to have_content ("Andy's Test Review")
     expect(page).to have_content ("4 Stars")
