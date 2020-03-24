@@ -1,0 +1,31 @@
+<nav>
+  <ul class="nav_list">
+    <li class="nav_link">
+      <%= link_to "All Pets", "/pets" %>
+    </li>
+    <li class="nav_link">
+      <%= link_to "All Shelters", "/shelters" %>
+    </li>
+  </ul>
+</nav>
+<content>
+  <h1>New Pet</h1>
+  <%= form_tag("/shelters/#{@shelter.id}/pets", method: :post) do %>
+    <%= label_tag :name %>
+    <%= text_field_tag :name %>
+    <br>
+    <%= label_tag :age %>
+    <%= text_field_tag :age %>
+    <br>
+    <%= label_tag :sex %>
+    <%= text_field_tag :sex %>
+    <br>
+    <%= label_tag :description %>
+    <%= text_field_tag :description %>
+    <br>
+    <%= label_tag :image %>
+    <%= text_field_tag :image %>
+    <br>
+    <%= button_tag 'Create Pet' %>
+  <% end %>
+</content>

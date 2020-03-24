@@ -1,0 +1,40 @@
+<nav>
+  <ul class="nav_list">
+    <li class="nav_link">
+      <%= link_to "All Pets", "/pets" %>
+    </li>
+    <li class="nav_link">
+      <%= link_to "All Shelters", "/shelters" %>
+    </li>
+  </ul>
+</nav>
+<content>
+  <h1><%= @shelter.name %></h1>
+  <br>
+  <h3><%= "#{@shelter.adoptable_pets.count} #{@shelter.adoptable_pets.count == 1 ? "pet":"pets"} available!" %>
+  <br>
+  <% @shelter.adoptable_pets.each do |pet| %>
+    <section id = <%="#{pet.id}" %>>
+      <div>
+        <h3><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h3>
+        <p><%= pet.age %></p>
+        <p><%= pet.sex %></p>
+        <p><%= image_tag(image_path(pet.image)) %></p>
+      </div>
+    </section>
+  <% end %>
+  <h3><%= "#{@shelter.pending_pets.count} #{@shelter.pending_pets.count == 1 ? "pet":"pets"} pending adoption!" %>
+  <% @shelter.pending_pets.each do |pet| %>
+    <section id = <%="#{pet.id}" %>>
+      <div>
+        <h3><%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h3>
+        <p><%= pet.age %></p>
+        <p><%= pet.sex %></p>
+        <p><%= image_tag(image_path(pet.image)) %></p>
+      </div>
+    </section>
+  <% end %>
+  <br>
+  <br>
+  <%= link_to "Create Pet", "/shelters/#{@shelter.id}/pets/new" %>
+</content>
