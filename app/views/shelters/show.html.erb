@@ -3,7 +3,7 @@
     <li class="nav_link">
       <%= link_to "All Pets", "/pets" %>
     </li>
-    <li class="nav_link"> 
+    <li class="nav_link">
       <%= link_to "All Shelters", "/shelters" %>
     </li>
   </ul>
@@ -14,6 +14,14 @@
   <p><%= @shelter.address %></p>
   <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
   <br>
+  <%= @shelter.shelter_reviews.each do |review| %>
+  <section id = <%="Review-#{review.id}" %>>
+    <div>
+      <p><%= review.title %></p>
+      <p><%= review.rating %></p>
+      <p><%= review.content %></p>
+      <img src="<%=review.image%>">
+  <% end %>
   <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>
   <br>
