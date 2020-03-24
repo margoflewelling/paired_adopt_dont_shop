@@ -7,7 +7,16 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
-
+  <nav>
+    <ul class="nav_list">
+      <li class="nav_link">
+        <%= link_to "All Pets", "/pets" %>
+      </li>
+      <li class="nav_link">
+        <%= link_to "All Shelters", "/shelters" %>
+      </li>
+    </ul>
+  </nav>
   <body>
     <%= yield %>
   </body>
