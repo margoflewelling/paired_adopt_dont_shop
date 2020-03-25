@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   get '/shelters/:shelter_id/review/new', to: 'reviews#new'
   get '/shelters/:shelter_id/:review_id/edit', to: 'reviews#edit'
-  patch '/shelters/:shelter_id/:review_id', to: 'reviews#update'
+  patch '/shelters/:shelter_id/:review_id/edit', to: 'reviews#update'
 
   delete "/shelters/:shelter_id/:review_id", to: 'reviews#destroy'
   get '/shelters/:id/pets', to: 'showpets#index'
