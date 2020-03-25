@@ -9,17 +9,11 @@ class PetsController < ApplicationController
   end
 
   def create
-    pet = Pet.new({
-                    name: create_params[:name],
-                    age: create_params[:age],
-                    sex: create_params[:sex],
-                    description: create_params[:description],
-                    image: create_params[:image],
-                    adoptable_status: "Adoptable",
-                    shelter_id: create_params[:id]
-                  })
+    shelter = Shelter.find(params[:id])
+    pet = shelter.pets.create(pet_params)
+    pet.adoptable_status = "Adoptable"
     pet.save
-    redirect_to "/shelters/#{create_params[:id]}/pets"
+    redirect_to "/shelters/#{pet_params[:id]}/pets"
   end
 
   def show
@@ -32,14 +26,7 @@ class PetsController < ApplicationController
 
   def update
     pet = Pet.find(params[:id])
-    pet[:name] = update_params[:name]
-    pet[:age] = update_params[:age]
-    pet[:sex] = update_params[:sex]
-    pet[:description] = update_params[:description]
-    pet[:image] = update_params[:image]
-    pet[:adoptable_status] = update_params[:adoptable_status]
-
-    pet.save
+    pet.update(pet_params)
     redirect_to "/pets/#{pet.id}"
   end
 
@@ -50,11 +37,7 @@ class PetsController < ApplicationController
 
   private
 
-  def create_params
-    params.permit(:name, :age, :sex, :description, :image, :id)
-  end
-
-  def update_params
-    params.permit(:name, :age, :sex, :description, :image, :adoptable_status)
+  def pet_params
+    params.permit(:name, :age, :sex, :description, :image, :id, :adoptable_status)
   end
 end

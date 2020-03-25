@@ -1,21 +1,20 @@
-<nav>
-  <ul class="nav_list">
-    <li class="nav_link">
-      <%= link_to "All Pets", "/pets" %>
-    </li>
-    <li class="nav_link"> 
-      <%= link_to "All Shelters", "/shelters" %>
-    </li>
-  </ul>
-</nav>
 <content>
   <h1><%= @shelter.name %></h1>
   <%= link_to "View Pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
   <p><%= @shelter.address %></p>
   <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
   <br>
+  <%= @shelter.reviews.each do |review| %>
+  <section id = <%="Review-#{review.id}" %>>
+    <div>
+      <p><%= review.title %></p>
+      <p><%= review.rating %></p>
+      <p><%= review.content %></p>
+  <% end %>
   <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>
   <br>
   <%= link_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
+  <%= link_to "Add New Review", "/shelters/#{@shelter.id}/review/new" %>
+
 </content>
