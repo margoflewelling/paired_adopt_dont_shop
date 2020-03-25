@@ -14,7 +14,7 @@
   <p><%= @shelter.address %></p>
   <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
   <br>
-  <%= @shelter.reviews.each do |review| %>
+  <% @shelter.reviews.each do |review| %>
   <section id = <%="Review-#{review.id}" %>>
     <div>
       <p><%= review.title %></p>
