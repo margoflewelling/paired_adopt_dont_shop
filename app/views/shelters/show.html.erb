@@ -4,12 +4,14 @@
   <p><%= @shelter.address %></p>
   <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
   <br>
-  <%= @shelter.reviews.each do |review| %>
+  <% @shelter.reviews.each do |review| %>
   <section id = <%="Review-#{review.id}" %>>
     <div>
       <p><%= review.title %></p>
       <p><%= review.rating %></p>
       <p><%= review.content %></p>
+      <%= link_to "Edit Review", "/shelters/#{@shelter.id}/#{review.id}/edit" %>
+      <%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete %>
   <% end %>
   <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>

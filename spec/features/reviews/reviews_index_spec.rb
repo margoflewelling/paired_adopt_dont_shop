@@ -55,4 +55,23 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect(page).to have_content ("4 Stars")
     expect(page).to have_content ("Lorem Ipsum dog stuff")
   end
+
+  it 'can edit a review for a shelter' do
+    visit "shelters/#{@shelter_1.id}"
+    click_link "Edit Review"
+    expect(page).to have_current_path("/shelters/#{@shelter_1.id}/#{@review_1.id}/edit")
+    fill_in('rating', :with => "3 Stars")
+    click_on "Save Review"
+    expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
+    expect(page).to have_content ("3 Stars")
+    expect(page).to_not have_content("5 Stars")
+  end
+
+  it 'can delete a review for a shelter' do
+    visit "shelters/#{@shelter_1.id}"
+    click_link "Delete Review"
+    expect(page).to_not have_content (@review_1.title)
+    expect(page).to_not have_content (@review_1.content)
+  end
+
 end
