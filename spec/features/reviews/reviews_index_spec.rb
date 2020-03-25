@@ -74,4 +74,16 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect(page).to_not have_content (@review_1.content)
   end
 
+  it 'shows a flash message for incomplete fields on creation' do
+    visit "shelters/#{@shelter_1.id}"
+    click_link "Add New Review"
+
+    expect(page).to have_current_path("/shelters/#{@shelter_1.id}/review/new")
+
+    click_button "Save Review"
+
+    expect(page).to have_content ("Please enter a title, rating, and description")
+    expect(page).to have_current_path("/shelters/#{@shelter_1.id}/review/new")
+  end
+
 end

@@ -1,29 +1,18 @@
-<nav>
-  <ul class="nav_list">
-    <li class="nav_link">
-      <%= link_to "All Pets", "/pets" %>
-    </li>
-    <li class="nav_link">
-      <%= link_to "All Shelters", "/shelters" %>
-    </li>
-  </ul>
-</nav>
 <content>
-
-<h1>New Review</h1>
-<%= form_tag("/shelters/#{@shelter.id}", method: :post) do %>
-  <%= label_tag :title %>
-  <%= text_field_tag :title %>
-  <br>
-  <%= label_tag :rating %>
-  <%= text_field_tag :rating %>
-  <br>
-  <%= label_tag :content %>
-  <%= text_field_tag :content %>
-  <br>
-  <%= label_tag :image %>
-  <%= text_field_tag :image %>
-  <br>
-  <%= submit_tag 'Save Review' %>
-<% end %>
+  <h1>New Review</h1>
+  <%= form_tag("/shelters/#{@shelter.id}/review/new", method: :post) do %>
+    <%= label_tag :title %>
+    <%= text_field_tag :title %>
+    <br>
+    <%= label_tag :rating %>
+    <%= text_field_tag :rating %>
+    <br>
+    <%= label_tag :content %>
+    <%= text_field_tag :content %>
+    <br>
+    <%= label_tag :image %>
+    <%= text_field_tag :image %>
+    <br>
+    <%= submit_tag 'Save Review' %>
+  <% end %>
 </content>
