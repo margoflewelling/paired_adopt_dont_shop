@@ -12,8 +12,6 @@ describe Pet, type: :model do
     it {should validate_inclusion_of(:sex). in_array ['Male', 'male', 'MALE', 'Female', 'female', 'FEMALE']}
     it {should validate_presence_of :description}
     it {should validate_presence_of :image}
-    it {should validate_presence_of :adoptable_status}
-    it {should validate_inclusion_of(:adoptable_status). in_array ['Adoptable', 'Pending Adoption', 'Adopted']}
   end
 
   describe "model methods" do
@@ -28,8 +26,7 @@ describe Pet, type: :model do
                           age: 4,
                           sex: "Male",
                           shelter_id: shelter_1.id,
-                          image: 'hp.jpg',
-                          adoptable_status: 'Adoptable')
+                          image: 'hp.jpg')
 
       expect(pet_1.shelter_name).to eq("Henry Porter's Puppies")
     end
