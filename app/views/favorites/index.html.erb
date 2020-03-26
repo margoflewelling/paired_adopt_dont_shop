@@ -1,0 +1,16 @@
+<content>
+  <h1>My Favorite Pets</h1>
+  <% @favorites.each do |pet_id| %>
+    <section id = "pet-<%="#{pet_id}"%>">
+      <div>
+        <h2><%= link_to "#{pet_id.name}", "pets/#{pet_id.id}" %></h2>
+        <p><%= pet.age.to_s %></p>
+        <p><%= pet.sex %></p>
+        <p><%= link_to "#{pet.shelter_name}", "/shelters/#{pet.shelter_id}" %></p>
+        <%= image_tag(image_path(pet.image)) %>
+        <%= link_to "Edit Pet", "/pets/#{pet.id}/edit" %>
+        <%= link_to "Delete Pet", "/pets/#{pet.id}", method: :delete %>
+      </div>
+    </section>
+  <% end %>
+</content>

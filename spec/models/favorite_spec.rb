@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Favorite, type: :model do
+  before
+  @pet_1 = Pet.create( name: "Holly",
+                      age: 4,
+                      sex: "Male",
+                      shelter_id: @shelter_1.id,
+                      image: 'hp.jpg',
+                      description: 'Cute',
+                      adoptable_status: 'Adoptable')
+  @pet_2 = Pet.create( name: "Liza Bear",
+                      age: 16,
+                      sex: "Female",
+                      shelter_id: @shelter_1.id,
+                      image: 'hp2.jpg',
+                      description: 'Cute',
+                      adoptable_status: 'Adoptable')
 
   describe "#total_count" do
     it "can calculate the total count of pets favorited" do
