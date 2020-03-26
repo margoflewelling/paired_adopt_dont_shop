@@ -15,10 +15,12 @@
       <li class="nav_link">
         <%= link_to "All Shelters", "/shelters" %>
       </li>
+      <li class = "nav_link">
+        <div class="favorite">
+        <%= link_to "My Favorites: #{favorite.total_count}", "/favorites" %>
+        </div>
+      </li>
     </ul>
-    <div class="favorite">
-      <p>Favorites: <%= favorite.total_count %></p>
-    </div>
   </nav>
   <% flash.each do |type, message| %>
     <p><%= message %></p>

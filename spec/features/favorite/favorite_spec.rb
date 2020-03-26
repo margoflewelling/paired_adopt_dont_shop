@@ -42,6 +42,12 @@ RSpec.describe "Favorites - A user", type: :feature do
     end
   end
 
+  it "can navigate to the favorites index" do
+    visit "/pets"
+    click_link "My Favorites"
+    expect(page).to have_current_path("/favorites")
+  end 
+
   it "can favorite pets" do
     visit "/pets/#{@pet_1.id}"
     click_button 'Favorite'
