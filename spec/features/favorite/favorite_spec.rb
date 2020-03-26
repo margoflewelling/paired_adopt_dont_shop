@@ -24,6 +24,24 @@ RSpec.describe "Favorites - A user", type: :feature do
                         adoptable_status: 'Adoptable')
   end
 
+  it "can see a zero in the nav bar if it hasn't favorited any pets" do
+    visit "/pets"
+
+    within "nav" do
+      within ".favorite" do
+        expect(page).to have_content("0")
+      end
+    end
+
+    visit "/shelters"
+
+    within "nav" do
+      within ".favorite" do
+        expect(page).to have_content("0")
+      end
+    end
+  end
+
   it "can favorite pets" do
     visit "/pets/#{@pet_1.id}"
     click_button 'Favorite'

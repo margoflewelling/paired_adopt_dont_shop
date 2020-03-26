@@ -16,6 +16,9 @@
         <%= link_to "All Shelters", "/shelters" %>
       </li>
     </ul>
+    <div class="favorite">
+      <p>Favorites: <%= favorite.total_count %></p>
+    </div>
   </nav>
   <% flash.each do |type, message| %>
     <p><%= message %></p>
