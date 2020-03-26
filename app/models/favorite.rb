@@ -1,8 +1,8 @@
 class Favorite
   attr_reader :favorite_pets
 
-  def initialize(pet_ids = [])
-    @favorite_pets = pet_ids
+  def initialize(pet_ids)
+    @favorite_pets = pet_ids ||= Array.new
   end
 
   def total_count
@@ -11,6 +11,10 @@ class Favorite
     else
       @favorite_pets.length
     end
+  end
+
+  def add_favorite(pet_id)
+    @favorite_pets << pet_id
   end
 
 end

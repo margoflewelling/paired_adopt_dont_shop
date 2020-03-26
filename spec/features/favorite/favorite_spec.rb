@@ -47,6 +47,21 @@ RSpec.describe "Favorites - A user", type: :feature do
     click_button 'Favorite'
 
     expect(page).to have_content("#{@pet_1.name} has been added to your favorites list.")
+    within "nav" do
+      within ".favorite" do
+        expect(page).to have_content("1")
+      end
+    end
+
+    visit "/pets/#{@pet_2.id}"
+    click_button 'Favorite'
+
+    expect(page).to have_content("#{@pet_2.name} has been added to your favorites list.")
+    within "nav" do
+      within ".favorite" do
+        expect(page).to have_content("2")
+      end
+    end
   end
 
 end
