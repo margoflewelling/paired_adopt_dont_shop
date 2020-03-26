@@ -56,4 +56,21 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     end
   end
 
+  it "can delete favorites from the favorite index page" do
+    visit "/pets/#{@pet_1.id}"
+    click_button "Favorite"
+    visit "/favorite"
+
+    expect(page).to have_content("My Favorites: 1")
+
+    within ".pet-#{@pet_1.id}" do
+      click_button "Unfavorite"
+    end
+
+    expect(page).to have_current_path("/favorite")
+    expect(page).to_not have_css(".pet-#{@pet_1.id}")
+    expect(page).to have_content("#{@pet_1.name} has been removed from your favorites")
+    expect(page).to have_content("My Favorites: 0")
+  end
+
 end

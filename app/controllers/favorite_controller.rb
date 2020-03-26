@@ -17,7 +17,12 @@ class FavoriteController < ApplicationController
     favorite.favorite_pets.delete(params[:pet_id])
     session[:favorite] = favorite.favorite_pets
     flash[:notice] = "#{pet.name} has been removed from your favorites"
-    redirect_to "/pets/#{params[:pet_id]}"
+    if params[:state] == "index_redirect"
+      redirect_to "/favorite"
+    else
+      redirect_to "/pets/#{params[:pet_id]}"
+    end
+
   end
 
 end

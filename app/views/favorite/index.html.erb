@@ -6,6 +6,7 @@
       <div>
         <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
         <img src="<%=pet.image%>">
+        <%= button_to "Unfavorite", "/favorite/#{pet.id}", params: { state: :index_redirect }, method: :delete %>
       </div>
     </section>
   <% end %>
