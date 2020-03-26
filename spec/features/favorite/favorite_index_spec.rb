@@ -34,52 +34,12 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     visit "/favorites"
     within ".pet-#{@pet_1.id}" do
       expect(page).to have_content(@pet_1.name)
-      expect(page).to have_css('img[src="#{@pet_1.image}"]')
+      expect(page).to have_css("img[src='#{@pet_1.image}']")
     end
 
     click_link("#{@pet_1.name}")
     expect(page).to have_current_path("/pets/#{@pet_1.id}")
   end
 
-
-  it "can see a zero in the nav bar if it hasn't favorited any pets" do
-    visit "/pets"
-
-    within "nav" do
-      within ".favorite" do
-        expect(page).to have_content("0")
-      end
-    end
-
-    visit "/shelters"
-
-    within "nav" do
-      within ".favorite" do
-        expect(page).to have_content("0")
-      end
-    end
-  end
-
-  it "can favorite pets" do
-    visit "/pets/#{@pet_1.id}"
-    click_button 'Favorite'
-
-    expect(page).to have_content("#{@pet_1.name} has been added to your favorites list.")
-    within "nav" do
-      within ".favorite" do
-        expect(page).to have_content("1")
-      end
-    end
-
-    visit "/pets/#{@pet_2.id}"
-    click_button 'Favorite'
-
-    expect(page).to have_content("#{@pet_2.name} has been added to your favorites list.")
-    within "nav" do
-      within ".favorite" do
-        expect(page).to have_content("2")
-      end
-    end
-  end
 
 end
