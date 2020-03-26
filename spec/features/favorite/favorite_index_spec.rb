@@ -73,4 +73,10 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     expect(page).to have_content("My Favorites: 0")
   end
 
+  it "can be told it has no favorites when it has not favorited" do
+    visit "/favorite"
+
+    expect(page).to have_content("You have not selected any pets as favorites.")
+  end
+
 end

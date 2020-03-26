@@ -1,13 +1,17 @@
 <content>
   <h1>My Favorite Pets</h1>
-  <% @favorites.each do |pet_id| %>
-  <% pet = Pet.find(pet_id) %>
-    <section class = "pet-<%="#{pet.id}"%>">
-      <div>
-        <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
-        <img src="<%=pet.image%>">
-        <%= button_to "Unfavorite", "/favorite/#{pet.id}", params: { state: :index_redirect }, method: :delete %>
-      </div>
-    </section>
+  <% if @favorites == [] %>
+    <p>"You have not selected any pets as favorites."</p>
+  <% else %>
+    <% @favorites.each do |pet_id| %>
+    <% pet = Pet.find(pet_id) %>
+      <section class = "pet-<%="#{pet.id}"%>">
+        <div>
+          <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
+          <img src="<%=pet.image%>">
+          <%= button_to "Unfavorite", "/favorite/#{pet.id}", params: { state: :index_redirect }, method: :delete %>
+        </div>
+      </section>
+    <% end %>
   <% end %>
 </content>
