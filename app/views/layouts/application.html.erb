@@ -17,6 +17,9 @@
       </li>
     </ul>
   </nav>
+  <% flash.each do |type, message| %>
+    <p><%= message %></p>
+  <% end %>
   <body>
     <%= yield %>
   </body>
