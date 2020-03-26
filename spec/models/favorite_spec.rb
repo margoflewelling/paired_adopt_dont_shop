@@ -24,7 +24,7 @@ RSpec.describe Favorite, type: :model do
       favorite.add_favorite(111)
       favorite.add_favorite(1111)
 
-      expect(favorite.favorite_pets).to eq([1, 111, 1111])
+      expect(favorite.favorite_pets).to eq(["1", "111", "1111"])
     end
   end
 

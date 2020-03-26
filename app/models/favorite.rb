@@ -14,7 +14,7 @@ class Favorite
   end
 
   def add_favorite(pet_id)
-    @favorite_pets << pet_id
+    @favorite_pets << (pet_id).to_s
   end
 
 end

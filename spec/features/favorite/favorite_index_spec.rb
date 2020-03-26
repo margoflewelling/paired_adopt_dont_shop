@@ -26,12 +26,12 @@ RSpec.describe "Favorites Index - A user", type: :feature do
 
 
   it "can see a list of all favorited pets" do
-    visit "/favorites"
+    visit "/favorite"
     expect(page).to_not have_content(@pet_1.name)
     visit "/pets/#{@pet_1.id}"
     click_button 'Favorite'
 
-    visit "/favorites"
+    visit "/favorite"
     within ".pet-#{@pet_1.id}" do
       expect(page).to have_content(@pet_1.name)
       expect(page).to have_css("img[src='#{@pet_1.image}']")
@@ -41,5 +41,19 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     expect(page).to have_current_path("/pets/#{@pet_1.id}")
   end
 
+  it "can only favorite a pet once" do
+    visit "/pets/#{@pet_1.id}"
+    click_button "Favorite"
+    page.refresh
+    expect(page).to_not have_button("Favorite")
+    click_button "Unfavorite"
+    expect(page).to have_current_path("/pets/#{@pet_1.id}")
+    expect(page).to have_content("#{@pet_1.name} has been removed from your favorites")
+    page.refresh
+    expect(page).to have_button("Favorite")
+    within ".favorite" do
+      expect(page).to have_content("0")
+    end
+  end
 
 end
