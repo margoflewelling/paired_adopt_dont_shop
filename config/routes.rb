@@ -19,12 +19,13 @@ Rails.application.routes.draw do
   patch '/pets/:id', to: 'pets#update'
   delete '/pets/:id', to: 'pets#destroy'
 
-
   get '/shelters/:shelter_id/review/new', to: 'reviews#new'
   get '/shelters/:shelter_id/:review_id/edit', to: 'reviews#edit'
   patch '/shelters/:shelter_id/:review_id/edit', to: 'reviews#update'
 
   delete "/shelters/:shelter_id/:review_id", to: 'reviews#destroy'
   get '/shelters/:id/pets', to: 'showpets#index'
+
+  patch "/favorite/:pet_id", to: "favorite#update"
 
 end
