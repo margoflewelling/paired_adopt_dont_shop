@@ -79,4 +79,20 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     expect(page).to have_content("You have not selected any pets as favorites.")
   end
 
+  it "can bulk unfavorite all pets" do
+    visit "/pets/#{@pet_1.id}"
+    click_button "Favorite"
+    visit "/pets/#{@pet_2.id}"
+    click_button "Favorite"
+    visit "/favorite"
+
+    expect(page).to have_css(".pet-#{@pet_1.id}")
+    expect(page).to have_css(".pet-#{@pet_2.id}")
+
+    click_button "Remove All Favorites"
+
+    expect(page).to_not have_css(".pet-#{@pet_1.id}")
+    expect(page).to_not have_css(".pet-#{@pet_2.id}")
+  end
+
 end

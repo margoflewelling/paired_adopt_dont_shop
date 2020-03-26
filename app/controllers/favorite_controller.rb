@@ -22,7 +22,10 @@ class FavoriteController < ApplicationController
     else
       redirect_to "/pets/#{params[:pet_id]}"
     end
-
   end
 
+  def destroy_all
+    session[:favorite] = []
+    redirect_to "/favorite"
+  end
 end
