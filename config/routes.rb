@@ -28,4 +28,7 @@ Rails.application.routes.draw do
   patch "/favorite/:pet_id", to: "favorite#update"
   delete "/favorite/:pet_id", to: "favorite#destroy"
   delete "favorite", to: "favorite#destroy_all"
+
+  get '/applications/new', to: "applications#new"
+  post '/applications/new', to: "applications#create"
 end

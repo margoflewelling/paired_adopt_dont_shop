@@ -28,4 +28,18 @@ RSpec.describe Favorite, type: :model do
     end
   end
 
+  describe "#remove" do
+    it "can remove pets from favorites once they have been applied for" do
+      favorite = Favorite.new([])
+      favorite.add_favorite(1)
+      favorite.add_favorite(111)
+      favorite.add_favorite(1111)
+      favorite.remove(1111)
+      favorite.remove(111)
+      expect(favorite.favorite_pets).to eq(["1"])
+    end
+  end 
+
+
+
 end
