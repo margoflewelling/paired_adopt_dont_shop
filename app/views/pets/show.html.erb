@@ -18,4 +18,10 @@
   <br>
   <%= link_to "View All Applications", "/pets/#{@pet.id}/applications" %>
 
+  <% if @pet.accepted_app_id %>
+  <% application = Application.find(@pet.accepted_app_id) %>
+    <p> <%="On hold for #{application.name}" %> </p>
+  <% end %>
+
+
 </content>
