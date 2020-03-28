@@ -10,8 +10,11 @@ class ApplicationsController < ApplicationController
       pet_names = pet_ids_applied.map {|pet_id| Pet.find(pet_id).name}
       flash[:notice] = "Your application has been processed for #{pet_names.join(", ")}"
       pet_ids_applied.each do |pet_id|
-      favorite.remove(pet_id)
+        favorite.remove(pet_id)
+        PetApplication.create(  pet_id: Pet.find(pet_id).id,
+                                application_id: application.id)
       end
+
       redirect_to "/favorite"
     else
       flash.now[:notice] = "You need to fill out all fields"
@@ -19,11 +22,13 @@ class ApplicationsController < ApplicationController
     end
   end
 
-
+  def show
+    @application = Application.find(application_params[:application_id])
+  end
 
 private
 
   def application_params
-    params.permit(:name, :address, :city, :state, :zip, :phone_number, :description)
+    params.permit(:application_id, :name, :address, :city, :state, :zip, :phone_number, :description, :pets)
   end
 end
