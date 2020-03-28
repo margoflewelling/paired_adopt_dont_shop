@@ -51,12 +51,29 @@ RSpec.describe "Application show page - As a user", type: :feature do
 
   it "can approve an application" do
     visit "/applications/#{@application_1.id}"
-    within ".#{@pet_1.id}"
-    click_link "Approve application for #{@pet_1.name}"
+    within("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
     expect(page).to have_current_path("/pets/#{@pet_1.id}")
     expect(page).to have_content("Pending Adoption")
     expect(page).to have_content("On hold for #{@application_1.name}")
-    save_and_open_page
   end
+
+  it "can approve a user for more than one pet" do
+    visit "/applications/#{@application_1.id}"
+    within ("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+    expect(page).to have_content("Pending Adoption")
+    expect(page).to have_content("On hold for #{@application_1.name}")
+
+    visit "/applications/#{@application_1.id}"
+    within ("##{@pet_2.id}") do
+      click_link "Approve application for #{@pet_2.name}"
+    end
+    expect(page).to have_content("Pending Adoption")
+    expect(page).to have_content("On hold for #{@application_1.name}")
+  end
+
 
 end
