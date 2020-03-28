@@ -71,4 +71,26 @@ RSpec.describe "PETS show page - A user", type: :feature do
     expect(page).to have_current_path("/pets")
     expect(page).to_not have_content(@pet_1.name)
   end
+
+  it "can see applications for a pet" do
+    application_1 = Application.create( name: "Andy",
+                                          address: "123 Main St",
+                                          city: "Denver",
+                                          state: "CO",
+                                          zip: "80220",
+                                          phone_number: "123-456-7890",
+                                          description: "I can has dogs.")
+    pet_application_1 = PetApplication.create(  pet_id: @pet_1.id,
+                                                  application_id: application_1.id)
+
+    visit "/pets/#{@pet_1.id}"
+    click_link "View All Applications"
+
+    expect(page).to have_current_path("/pets/#{@pet_1.id}/applications")
+    expect(page). to have_content(application_1.name)
+
+    click_link "#{application_1.name}"
+
+    expect(page).to have_current_path("/applications/#{application_1.id}")
+  end
 end

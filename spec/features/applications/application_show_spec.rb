@@ -45,7 +45,6 @@ RSpec.describe "Application show page - As a user", type: :feature do
     expect(page).to have_content(@application_1.description)
     expect(page).to have_content(@pet_1.name)
     expect(page).to have_content(@pet_2.name)
-    save_and_open_page
     click_link "#{@pet_2.name}"
     expect(page).to have_current_path("/pets/#{@pet_2.id}")
   end
