@@ -28,10 +28,21 @@ RSpec.describe "Application show page - As a user", type: :feature do
                                           zip: "80220",
                                           phone_number: "123-456-7890",
                                           description: "I can has dogs.")
+    @application_2 = Application.create( name: "Margo",
+                                          address: "123 S St",
+                                          city: "Denver",
+                                          state: "CO",
+                                          zip: "80210",
+                                          phone_number: "123-456-7890",
+                                          description: "I lub dogs.")
+
     @pet_application_1 = PetApplication.create(  pet_id: @pet_1.id,
                                                   application_id: @application_1.id)
     @pet_application_2 = PetApplication.create(  pet_id: @pet_2.id,
                                                   application_id: @application_1.id)
+    @pet_application_3 = PetApplication.create(  pet_id: @pet_1.id,
+                                                  application_id: @application_2.id)
+
   end
 
   it "can see pet applications" do
@@ -74,6 +85,17 @@ RSpec.describe "Application show page - As a user", type: :feature do
     expect(page).to have_content("Pending Adoption")
     expect(page).to have_content("On hold for #{@application_1.name}")
   end
+
+  it "pet can only have one approved application" do
+    visit "/applications/#{@application_1.id}"
+    within ("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+    visit "/applications/#{@application_2.id}"
+    within ("##{@pet_1.id}") do
+      expect(page).to_not have_link("Approve application for #{@pet_1.name}")
+    end
+  end 
 
 
 end
