@@ -1,9 +1,9 @@
 <content>
   <h1>My Favorite Pets</h1>
-  <% if @favorites == [] %>
+  <% if favorite.favorite_pets == [] %>
     <p>"You have not selected any pets as favorites."</p>
   <% else %>
-    <% @favorites.each do |pet_id| %>
+    <% favorite.favorite_pets.each do |pet_id| %>
     <% pet = Pet.find(pet_id) %>
       <section class = "pet-<%="#{pet.id}"%>">
         <div>

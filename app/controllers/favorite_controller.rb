@@ -15,6 +15,7 @@ class FavoriteController < ApplicationController
   def destroy
     pet = Pet.find(params[:pet_id])
     favorite.favorite_pets.delete(params[:pet_id])
+    require "pry"; binding.pry
     session[:favorite] = favorite.favorite_pets
     flash[:notice] = "#{pet.name} has been removed from your favorites"
     if params[:state] == "index_redirect"

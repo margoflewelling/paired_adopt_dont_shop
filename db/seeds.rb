@@ -24,7 +24,7 @@ shelter_2 = Shelter.create( name: "Holly's Homeless Animals",
                             zip: "43812"
                           )
 
-#artists
+#pets
 pet_1 = Pet.create( name: "Karl Barx",
                     age: 4,
                     sex: "Male",

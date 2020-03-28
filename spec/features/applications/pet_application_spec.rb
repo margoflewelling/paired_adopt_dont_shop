@@ -57,7 +57,25 @@ expect(page).to have_current_path("/favorite")
 within "content" do
 expect(page).to_not have_content(@pet_1.name)
 expect(page).to_not have_content(@pet_2.name)
-end 
 end
+end
+
+it "can require a complete application " do
+visit "/favorite"
+click_link "Adoption Application"
+expect(page).to have_current_path("/applications/new")
+expect(page).to have_content(@pet_1.name)
+expect(page).to have_content(@pet_2.name)
+check "#{@pet_1.id}"
+check "#{@pet_2.id}"
+fill_in(:name, :with => "Margo")
+fill_in(:address, :with => "1662 S Pearl S")
+fill_in(:description, :with => "I love dogs")
+click_button "Submit Application"
+expect(page).to have_content("You need to fill out all fields")
+expect(page).to have_current_path("/applications/new")
+end
+
+
 
 end
