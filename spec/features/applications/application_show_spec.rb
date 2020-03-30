@@ -139,6 +139,27 @@ RSpec.describe "Application show page - As a user", type: :feature do
     expect(page).to_not have_content(@shelter_1.name)
   end
 
+  it "can not delete a pet with an approved applciation" do
+    visit "/pets"
+    within "##{@pet_1.id}" do
+      expect(page).to have_link("Delete Pet")
+    end
 
+    visit "/pets/#{@pet_1.id}"
+    expect(page).to have_link("Delete Pet")
+
+    visit "/applications/#{@application_1.id}"
+    within("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+
+    visit "/pets"
+    within "##{@pet_1.id}" do
+      expect(page).to_not have_link("Delete Pet")
+    end
+
+    visit "/pets/#{@pet_1.id}"
+    expect(page).to_not have_link("Delete Pet")
+  end
 
 end
