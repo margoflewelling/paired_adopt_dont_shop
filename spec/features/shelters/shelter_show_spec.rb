@@ -80,12 +80,12 @@ RSpec.describe "SHELTERS show page - A user", type: :feature do
 
   it "can see shelter statistics" do
     Review.create!(title: "Found my forever friend!",
-                              rating: "5",
+                              rating: 5,
                               content: "They have great volunteers & staff at Henry's, adopted my first dog here!",
                               image: "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg",
                               shelter_id: @shelter_1.id)
     Review.create!(title: "Excellent!",
-                              rating: "1",
+                              rating: 1,
                               content: "They always have the best selection of dogs here!",
                               shelter_id: @shelter_1.id)
 
@@ -104,7 +104,8 @@ RSpec.describe "SHELTERS show page - A user", type: :feature do
     visit "/shelters/#{@shelter_1.id}"
 
     expect(page).to have_content("Number of pets living at this shelter: 2")
-    # expect(page).to have_content("Average rating of this shelter: 3")
+    expect(page).to have_content("Average rating of this shelter: 3.0")
     expect(page).to have_content("Number of applications on file at this shelter: 2")
+    save_and_open_page
   end
 end

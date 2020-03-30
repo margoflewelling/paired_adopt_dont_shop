@@ -15,12 +15,12 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
                                 zip: "43812")
 
     @review_1 = Review.create!(title: "Found my forever friend!",
-                              rating: "5 stars",
+                              rating: 5,
                               content: "They have great volunteers & staff at Henry's, adopted my first dog here!",
                               image: "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg",
                               shelter_id: @shelter_1.id)
     @review_2 = Review.create!(title: "Excellent!",
-                              rating: "Would recommend",
+                              rating: 4,
                               content: "They always have the best selection of dogs here!",
                               shelter_id: @shelter_2.id)
 
@@ -46,13 +46,13 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/review/new")
 
     fill_in('title', :with => "Andy's Test Review")
-    fill_in('rating', :with => "4 Stars")
+    fill_in('rating', :with => 3)
     fill_in('content', :with => "Lorem Ipsum dog stuff")
     fill_in('image', :with => "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg")
     click_button "Save Review"
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
     expect(page).to have_content ("Andy's Test Review")
-    expect(page).to have_content ("4 Stars")
+    expect(page).to have_content (3)
     expect(page).to have_content ("Lorem Ipsum dog stuff")
   end
 
@@ -60,11 +60,13 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     visit "shelters/#{@shelter_1.id}"
     click_link "Edit Review"
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/#{@review_1.id}/edit")
-    fill_in('rating', :with => "3 Stars")
+    fill_in('rating', :with => 3)
     click_on "Save Review"
-    expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
-    expect(page).to have_content ("3 Stars")
-    expect(page).to_not have_content("5 Stars")
+    within "#Review-#{@review_1.id}" do
+      expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
+      expect(page).to have_content (3)
+      expect(page).to_not have_content(5)
+    end
   end
 
   it 'can delete a review for a shelter' do

@@ -28,4 +28,12 @@ class Shelter < ApplicationRecord
     end
     app_count
   end
+
+  def average_rating
+    if reviews.length >= 1
+      reviews.average(:rating)
+    else
+      0
+    end
+  end
 end
