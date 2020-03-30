@@ -119,4 +119,13 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     end
   end
 
+  it "has a pet removed from favorites when that pet is deleted" do
+    visit "/pets/#{@pet_1.id}"
+    click_button 'Favorite'
+    click_link 'Delete Pet'
+    visit "/favorite"
+    
+    expect(page).to_not have_link("#{@pet_1.name}")
+  end
+
 end

@@ -106,6 +106,5 @@ RSpec.describe "SHELTERS show page - A user", type: :feature do
     expect(page).to have_content("Number of pets living at this shelter: 2")
     expect(page).to have_content("Average rating of this shelter: 3.0")
     expect(page).to have_content("Number of applications on file at this shelter: 2")
-    save_and_open_page
   end
 end

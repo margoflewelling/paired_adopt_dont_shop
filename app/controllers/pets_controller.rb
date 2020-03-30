@@ -33,6 +33,7 @@ class PetsController < ApplicationController
 
   def destroy
     Pet.destroy(params[:pet_id])
+    favorite.remove(params[:pet_id])
     redirect_to "/pets"
   end
 
