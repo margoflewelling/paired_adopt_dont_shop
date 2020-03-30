@@ -65,6 +65,24 @@ describe Shelter, type: :model do
       expect(@shelter_1.pending_pets).to include(@pet_2)
     end
 
+    it "- Calculates pet count" do
+      expect(@shelter_1.pet_count).to eq(3)
+    end
+
+    it "- Calculates application count" do
+      application_1 = Application.create( name: "Andy",
+                                            address: "123 Main St",
+                                            city: "Denver",
+                                            state: "CO",
+                                            zip: "80220",
+                                            phone_number: "123-456-7890",
+                                            description: "I can has dogs.")
+      PetApplication.create(  pet_id: @pet_1.id,
+                              application_id: application_1.id)
+
+      expect(@shelter_1.application_count).to eq(1)
+    end
+
     it "- Calculates average rating" do
       Review.create!(title: "Found my forever friend!",
                                 rating: 5,
