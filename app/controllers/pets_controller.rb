@@ -16,8 +16,8 @@ class PetsController < ApplicationController
     if pet.save
       redirect_to "/shelters/#{params[:shelter_id]}/pets"
     else
-      missing_fields = params.select {|k,v| v == ""}.keys
-      flash[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
+      missing_fields = validate_params.select {|k,v| v == ""}.keys
+      flash.now[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
       redirect_to "/shelters/#{shelter.id}/pets/new"
     end
   end
@@ -33,9 +33,9 @@ class PetsController < ApplicationController
 
   def update
     pet = Pet.find(params[:pet_id])
-    missing_fields = params.select {|k,v| v == ""}.keys
+    missing_fields = validate_params.select {|k,v| v == ""}.keys
     if missing_fields.length > 0
-      flash[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
+      flash.now[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
       redirect_to "/pets/#{pet.id}/edit"
     else
       pet.update(pet_params)
@@ -67,5 +67,9 @@ class PetsController < ApplicationController
 
   def pet_params
     params.permit(:name, :age, :sex, :description, :image, :id, :adoptable_status, :accepted_app_id)
+  end
+
+  def validate_params
+    params.permit(:name, :age, :sex, :description, :image)
   end
 end
