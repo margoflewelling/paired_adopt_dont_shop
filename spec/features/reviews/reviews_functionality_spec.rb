@@ -98,4 +98,11 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/#{@review_1.id}/edit")
   end
 
+  it "deletes a shelters reviews when a shelter is deleted" do
+    visit "shelters/#{@shelter_1.id}"
+    expect {click_on "Delete Shelter" }.to change(Review, :count).by(-1)
+  end
+
+
+
 end
