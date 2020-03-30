@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/shelters/:shelter_id/pets', to: 'pets#create'
   get '/pets/:pet_id/edit', to: 'pets#edit'
   get 'pets/:pet_id/applications', to: 'petapplications#index'
+  get '/pets/:pet_id/:application_id/revoke', to: 'pets#revoke_app'
   get '/pets/:pet_id/:application_id', to: 'pets#submit_app'
   patch '/pets/:pet_id', to: 'pets#update'
   delete '/pets/:pet_id', to: 'pets#destroy'

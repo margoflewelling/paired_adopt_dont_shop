@@ -95,7 +95,25 @@ RSpec.describe "Application show page - As a user", type: :feature do
     within ("##{@pet_1.id}") do
       expect(page).to_not have_link("Approve application for #{@pet_1.name}")
     end
-  end 
+  end
 
+  it "can revoke an approved application" do
+    visit "/applications/#{@application_1.id}"
+    within ("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+    visit "/applications/#{@application_1.id}"
 
+    expect(page).to have_link("Unapprove application for #{@pet_1.name}")
+
+    click_link "Unapprove application for #{@pet_1.name}"
+
+    expect(page).to have_current_path("/applications/#{@application_1.id}")
+    expect(page).to have_link("Approve application for #{@pet_1.name}")
+
+    visit "/pets/#{@pet_1.id}"
+
+    expect(page).to have_content("Adoption Status: Adoptable")
+    expect(page).to_not have_content("On hold for")
+  end
 end

@@ -12,7 +12,9 @@
         <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
 
         <% if !pet.accepted_app_id %>
-        <%= link_to "Approve application for #{pet.name}", "/pets/#{pet.id}/#{@application.id}" %>
+          <%= link_to "Approve application for #{pet.name}", "/pets/#{pet.id}/#{@application.id}" %>
+        <% else %>
+          <%= link_to "Unapprove application for #{pet.name}", "/pets/#{pet.id}/#{@application.id}/revoke" %>
         <% end %>
     </section>
   <% end %>

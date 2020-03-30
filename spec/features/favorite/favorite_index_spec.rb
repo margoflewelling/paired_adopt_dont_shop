@@ -117,7 +117,6 @@ RSpec.describe "Favorites Index - A user", type: :feature do
       expect(page).to have_link("#{@pet_1.name}")
       expect(page).to_not have_link("#{@pet_2.name}")
     end
-    save_and_open_page
   end
 
 end
