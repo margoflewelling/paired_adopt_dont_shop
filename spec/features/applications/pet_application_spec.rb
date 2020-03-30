@@ -54,9 +54,9 @@ fill_in(:description, :with => "I love dogs")
 click_button "Submit Application"
 expect(page).to have_content("Your application has been processed for #{@pet_1.name}, #{@pet_2.name}")
 expect(page).to have_current_path("/favorite")
-within "content" do
-expect(page).to_not have_content(@pet_1.name)
-expect(page).to_not have_content(@pet_2.name)
+within "#favorite_pets" do
+  expect(page).to_not have_content(@pet_1.name)
+  expect(page).to_not have_content(@pet_2.name)
 end
 end
 
