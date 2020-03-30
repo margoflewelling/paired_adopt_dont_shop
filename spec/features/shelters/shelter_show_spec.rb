@@ -35,6 +35,15 @@ RSpec.describe "SHELTERS show page - A user", type: :feature do
     expect(page).to have_content("80202")
   end
 
+  it 'can not update without all information' do
+    visit "/shelters/#{@shelter_1.id}"
+    click_link "Update Shelter"
+    fill_in('zip', :with => nil)
+    click_button "Update Shelter"
+    expect(page).to have_content("You need to complete the zip information")
+  end
+
+
   it "can delete a sheleter" do
     visit "/shelters"
 

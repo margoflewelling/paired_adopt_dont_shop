@@ -16,4 +16,14 @@ RSpec.describe "SHELTERS new page - A user", type: :feature do
     expect(page).to have_content("OH")
     expect(page).to have_content("43812")
   end
+
+  it 'can not create a shelter without filling out all fields' do
+    visit "/shelters/new"
+    fill_in('Name', :with => "Holly's Homeless Animals")
+    fill_in('State', :with => 'OH')
+    fill_in('Zip', :with => '43812')
+    click_button('Create Shelter')
+    expect(page).to have_content("You need to complete the address, city information")
+  end
+
 end
