@@ -130,5 +130,15 @@ RSpec.describe "Application show page - As a user", type: :feature do
     end
   end
 
+  it "can delete and shelter as long as no pets are pending, and all pets get deleted" do
+    visit "/shelters/#{@shelter_1.id}"
+    click_link "Delete Shelter"
+    visit "/pets"
+    expect(page).to_not have_content(@pet_1.name)
+    visit "/shelters"
+    expect(page).to_not have_content(@shelter_1.name)
+  end
+
+
 
 end
