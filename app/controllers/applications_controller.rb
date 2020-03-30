@@ -14,7 +14,6 @@ class ApplicationsController < ApplicationController
         PetApplication.create(  pet_id: Pet.find(pet_id).id,
                                 application_id: application.id)
       end
-
       redirect_to "/favorite"
     else
       flash.now[:notice] = "You need to fill out all fields"

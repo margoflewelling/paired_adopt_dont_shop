@@ -9,7 +9,9 @@
         <p><%= link_to "#{pet.shelter_name}", "/shelters/#{pet.shelter_id}" %></p>
         <%= image_tag(image_path(pet.image)) %>
         <%= link_to "Edit Pet", "/pets/#{pet.id}/edit" %>
-        <%= link_to "Delete Pet", "/pets/#{pet.id}", method: :delete %>
+        <% if pet.adoptable_status == "Adoptable" %>
+          <%= link_to "Delete Pet", "/pets/#{pet.id}", method: :delete %>
+        <% end %>
       </div>
     </section>
   <% end %>

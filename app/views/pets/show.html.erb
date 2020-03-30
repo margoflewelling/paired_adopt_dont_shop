@@ -8,7 +8,9 @@
   <br>
   <%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %>
   <br>
-  <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete %>
+  <% if @pet.adoptable_status == "Adoptable" %>
+    <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete %>
+  <% end %>
   <br>
   <% if favorite.favorite_pets.include?(@pet.id.to_s) %>
     <%= button_to "Unfavorite", "/favorite/#{@pet.id}", method: :delete %>

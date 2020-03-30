@@ -8,7 +8,13 @@ class SheltersController < ApplicationController
 
   def create
     shelter = Shelter.create(shelter_params)
-    redirect_to "/shelters/#{shelter.id}"
+    if shelter.save
+      redirect_to "/shelters/#{shelter.id}"
+    else
+      missing_fields = params.select {|k,v| v == ""}.keys
+      flash[:notice] = "You need to complete the #{missing_fields.join(", ")} information"
+      render :new
+    end
   end
 
   def show
@@ -20,13 +26,24 @@ class SheltersController < ApplicationController
   end
 
   def update
-    shelter = Shelter.find(params[:shelter_id])
-    shelter.update(shelter_params)
-    redirect_to "/shelters/#{shelter.id}"
+    @shelter = Shelter.find(params[:shelter_id])
+    missing_fields = params.select {|k,v| v == ""}.keys
+    if missing_fields.length > 0
+      flash[:notice] = "You need to complete the #{missing_fields.join(", ")} information"
+      render :edit
+    else
+      @shelter.update(shelter_params)
+      redirect_to "/shelters/#{@shelter.id}"
+    end
   end
 
   def destroy
-    Shelter.find(params[:shelter_id]).pets.each { |pet| pet.destroy }
+    shelter = Shelter.find(params[:shelter_id])
+    shelter.pets.each do |pet|
+      pet.pet_applications.destroy_all
+      pet.destroy
+     end
+    shelter.reviews.destroy_all
     Shelter.destroy(params[:shelter_id])
     redirect_to "/shelters"
   end

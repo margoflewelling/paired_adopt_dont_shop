@@ -13,7 +13,13 @@ class PetsController < ApplicationController
     pet = shelter.pets.create(pet_params)
     pet.adoptable_status = "Adoptable"
     pet.save
-    redirect_to "/shelters/#{params[:shelter_id]}/pets"
+    if pet.save
+      redirect_to "/shelters/#{params[:shelter_id]}/pets"
+    else
+      missing_fields = params.select {|k,v| v == ""}.keys
+      flash[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
+      redirect_to "/shelters/#{shelter.id}/pets/new"
+    end
   end
 
   def show
@@ -27,12 +33,19 @@ class PetsController < ApplicationController
 
   def update
     pet = Pet.find(params[:pet_id])
-    pet.update(pet_params)
-    redirect_to "/pets/#{pet.id}"
+    missing_fields = params.select {|k,v| v == ""}.keys
+    if missing_fields.length > 0
+      flash[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
+      redirect_to "/pets/#{pet.id}/edit"
+    else
+      pet.update(pet_params)
+      redirect_to "/pets/#{pet.id}"
+    end
   end
 
   def destroy
     Pet.destroy(params[:pet_id])
+    favorite.remove(params[:pet_id])
     redirect_to "/pets"
   end
 
