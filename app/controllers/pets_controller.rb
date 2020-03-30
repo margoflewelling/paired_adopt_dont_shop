@@ -13,7 +13,13 @@ class PetsController < ApplicationController
     pet = shelter.pets.create(pet_params)
     pet.adoptable_status = "Adoptable"
     pet.save
-    redirect_to "/shelters/#{params[:shelter_id]}/pets"
+    if pet.save
+      redirect_to "/shelters/#{params[:shelter_id]}/pets"
+    else
+      missing_fields = params.select {|k,v| v == ""}.keys
+      flash[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
+      redirect_to "/shelters/#{shelter.id}/pets/new"
+    end
   end
 
   def show
