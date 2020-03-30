@@ -16,7 +16,9 @@
   <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>
   <br>
-  <%= link_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
+      <% if @shelter.pending_pets.length == 0 %>
+      <%= link_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
+    <% end %>
   <%= link_to "Add New Review", "/shelters/#{@shelter.id}/review/new" %>
 
 </content>

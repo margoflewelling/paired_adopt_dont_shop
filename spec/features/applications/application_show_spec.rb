@@ -116,4 +116,19 @@ RSpec.describe "Application show page - As a user", type: :feature do
     expect(page).to have_content("Adoption Status: Adoptable")
     expect(page).to_not have_content("On hold for")
   end
+
+  it "can not delete a shelter that has pets with pending applications" do
+    visit "/applications/#{@application_1.id}"
+    within ("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+    visit "/shelters/#{@shelter_1.id}"
+    expect(page).to_not have_link("Delete Shelter")
+    visit "/shelters"
+    within ("##{@shelter_1.id}") do
+      expect(page).to_not have_link("Delete Shelter")
+    end
+  end
+
+
 end
