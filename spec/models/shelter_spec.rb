@@ -64,5 +64,19 @@ describe Shelter, type: :model do
       expect(@shelter_1.adoptable_pets).not_to include(@pet_4)
       expect(@shelter_1.pending_pets).to include(@pet_2)
     end
+
+    it "- Calculates average rating" do
+      Review.create!(title: "Found my forever friend!",
+                                rating: 5,
+                                content: "They have great volunteers & staff at Henry's, adopted my first dog here!",
+                                image: "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg",
+                                shelter_id: @shelter_1.id)
+      Review.create!(title: "Excellent!",
+                                rating: 4,
+                                content: "They always have the best selection of dogs here!",
+                                shelter_id: @shelter_1.id)
+
+      expect(@shelter_1.average_rating).to eq(4.5)
+    end
   end
 end
