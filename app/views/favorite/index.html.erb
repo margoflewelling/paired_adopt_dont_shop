@@ -1,19 +1,32 @@
 <content>
-  <h1>My Favorite Pets</h1>
-  <% if @favorites == [] %>
-    <p>"You have not selected any pets as favorites."</p>
-  <% else %>
-    <% @favorites.each do |pet_id| %>
-    <% pet = Pet.find(pet_id) %>
-      <section class = "pet-<%="#{pet.id}"%>">
-        <div>
-          <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
-          <img src="<%=pet.image%>">
-          <%= button_to "Unfavorite", "/favorite/#{pet.id}", params: { state: :index_redirect }, method: :delete %>
-        </div>
-      </section>
+  <section id = "favorite_pets"
+    <h1>My Favorite Pets</h1>
+    <% if favorite.favorite_pets == [] %>
+      <p>"You have not selected any pets as favorites."</p>
+    <% else %>
+      <% favorite.favorite_pets.each do |pet_id| %>
+      <% pet = Pet.find(pet_id) %>
+        <section class = "pet-<%="#{pet.id}"%>">
+          <div>
+            <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
+            <img src="<%=pet.image%>">
+            <%= button_to "Unfavorite", "/favorite/#{pet.id}", params: { state: :index_redirect }, method: :delete %>
+          </div>
+        </section>
+      <% end %>
     <% end %>
-  <% end %>
+  </section>
   <br>
   <%= button_to "Remove All Favorites", "/favorite", method: :delete %>
+  <%= link_to "Adoption Application", "/applications/new", method: :get %>
+  <br>
+  <section id = "pending_applications"%>
+    <h2>Pets Pending Adoption</h2>
+    <% Pet.all.each do |pet| %>
+      <% if pet.applications.size > 0 %>
+        <%= link_to "#{pet.name}", "pets/#{pet.id}"  %>
+      <% end %>
+    <% end %>
+  </section>
+
 </content>

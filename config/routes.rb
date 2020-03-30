@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get '/shelters/:shelter_id/pets/new', to: 'pets#new'
   post '/shelters/:shelter_id/pets', to: 'pets#create'
   get '/pets/:pet_id/edit', to: 'pets#edit'
+  get 'pets/:pet_id/applications', to: 'petapplications#index'
+  get '/pets/:pet_id/:application_id/revoke', to: 'pets#revoke_app'
+  get '/pets/:pet_id/:application_id', to: 'pets#submit_app'
   patch '/pets/:pet_id', to: 'pets#update'
   delete '/pets/:pet_id', to: 'pets#destroy'
 
@@ -28,4 +31,9 @@ Rails.application.routes.draw do
   patch "/favorite/:pet_id", to: "favorite#update"
   delete "/favorite/:pet_id", to: "favorite#destroy"
   delete "favorite", to: "favorite#destroy_all"
+
+  get '/applications/new', to: "applications#new"
+  post '/applications/new', to: "applications#create"
+  get 'applications/:application_id', to: "applications#show"
+
 end

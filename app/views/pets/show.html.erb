@@ -1,18 +1,27 @@
 <content>
   <h1><%= @pet.name %></h1>
   <%= image_tag(image_path(@pet.image)) %>
-  <p><%= @pet.description %></p>
-  <p><%= @pet.age.to_s %></p>
-  <p><%= @pet.sex %></p>
-  <p><%= @pet.adoptable_status %></p>
+  <p><%= "Description: #{@pet.description}" %></p>
+  <p><%= "Age: #{@pet.age.to_s}" %></p>
+  <p><%= "Sex: #{@pet.sex}" %></p>
+  <p><%= "Adoption Status: #{@pet.adoptable_status}" %></p>
   <br>
   <%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %>
   <br>
   <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete %>
   <br>
   <% if favorite.favorite_pets.include?(@pet.id.to_s) %>
-  <%= button_to "Unfavorite", "/favorite/#{@pet.id}", method: :delete %>
+    <%= button_to "Unfavorite", "/favorite/#{@pet.id}", method: :delete %>
   <% else %>
-  <%= button_to "Favorite", "/favorite/#{@pet.id}", method: :patch %>
+    <%= button_to "Favorite", "/favorite/#{@pet.id}", method: :patch %>
   <%end%>
+  <br>
+  <%= link_to "View All Applications", "/pets/#{@pet.id}/applications" %>
+
+  <% if @pet.accepted_app_id %>
+    <% application = Application.find(@pet.accepted_app_id) %>
+    <p> <%="On hold for #{application.name}" %> </p>
+  <% end %>
+
+
 </content>
