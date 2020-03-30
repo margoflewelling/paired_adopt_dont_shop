@@ -14,4 +14,18 @@ class Shelter < ApplicationRecord
   def shelter_reviews
     reviews.each { |review| review }
   end
+
+  def pet_count
+    pets.select { |pet| pet.adoptable_status != "Adopted"}.length
+  end
+
+  def application_count
+    app_count = 0
+    pets.each do |pet|
+      if pet.adoptable_status != "Adopted"
+        app_count += pet.applications.length
+      end
+    end
+    app_count
+  end
 end

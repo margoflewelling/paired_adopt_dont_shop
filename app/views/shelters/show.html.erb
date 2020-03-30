@@ -1,5 +1,8 @@
 <content>
   <h1><%= @shelter.name %></h1>
+  <p> <%= "Number of pets living at this shelter: #{@shelter.pet_count}" %>
+  <p> <%= "Number of applications on file at this shelter: #{@shelter.application_count}" %>
+
   <%= link_to "View Pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
   <p><%= @shelter.address %></p>
   <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
