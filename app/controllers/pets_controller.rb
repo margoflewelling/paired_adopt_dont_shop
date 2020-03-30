@@ -33,8 +33,14 @@ class PetsController < ApplicationController
 
   def update
     pet = Pet.find(params[:pet_id])
-    pet.update(pet_params)
-    redirect_to "/pets/#{pet.id}"
+    missing_fields = params.select {|k,v| v == ""}.keys
+    if missing_fields.length > 0
+      flash[:notice] = "The following fields are incomplete: #{missing_fields.join(", ")}"
+      redirect_to "/pets/#{pet.id}/edit"
+    else
+      pet.update(pet_params)
+      redirect_to "/pets/#{pet.id}"
+    end
   end
 
   def destroy

@@ -49,4 +49,16 @@ RSpec.describe "PETS show page - A user", type: :feature do
     expect(page).to have_content(99)
     expect(page).to have_content("Likes to play fetch")
   end
+
+  it "can see a flash message when fields are incomplete" do
+    visit "/pets/#{@pet_1.id}/edit"
+
+    fill_in(:name, :with => nil)
+    fill_in(:sex, :with => nil)
+    fill_in(:age, :with => nil)
+    click_button "Update Pet"
+
+    expect(page).to have_current_path("/pets/#{@pet_1.id}/edit")
+    expect(page).to have_content("The following fields are incomplete: name, age, sex")
+  end
 end
