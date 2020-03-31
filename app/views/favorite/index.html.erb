@@ -2,7 +2,7 @@
   <section id = "favorite_pets"
     <h1>My Favorite Pets</h1>
     <% if favorite.favorite_pets == [] %>
-      <p>"You have not selected any pets as favorites."</p>
+      <p>You have not selected any pets as favorites.</p>
     <% else %>
       <% favorite.favorite_pets.each do |pet_id| %>
       <% pet = pet_id_lookup(pet_id) %>

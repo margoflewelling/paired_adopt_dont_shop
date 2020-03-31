@@ -46,7 +46,7 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/review/new")
 
     fill_in('title', :with => "Andy's Test Review")
-    fill_in('rating', :with => 3)
+    select "3", :from => "rating"
     fill_in('content', :with => "Lorem Ipsum dog stuff")
     fill_in('image', :with => "https://cdn.theatlantic.com/thumbor/pN25nhF1hatn7QpckNtABKwzmoI=/0x61:1000x624/720x405/media/old_wire/img/upload/2013/03/18/happydog/original.jpg")
     click_button "Save Review"
@@ -60,7 +60,7 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     visit "shelters/#{@shelter_1.id}"
     click_link "Edit Review"
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/#{@review_1.id}/edit")
-    fill_in('rating', :with => 3)
+    select "3", :from => "rating"
     click_on "Save Review"
     within "#Review-#{@review_1.id}" do
       expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
@@ -93,7 +93,7 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     click_link "Edit Review"
 
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}/#{@review_1.id}/edit")
-    fill_in('rating', :with => '')
+    fill_in('content', :with => '')
     click_button "Save Review"
 
     expect(page).to have_content ("Please enter a title, rating, and content")
