@@ -10,6 +10,7 @@ class FavoriteController < ApplicationController
 
   def index
     @favorites = favorite.favorite_pets
+    @pets = Pet.all
   end
 
   def destroy

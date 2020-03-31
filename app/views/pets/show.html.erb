@@ -21,7 +21,7 @@
   <%= link_to "View All Applications", "/pets/#{@pet.id}/applications" %>
 
   <% if @pet.accepted_app_id %>
-    <% application = Application.find(@pet.accepted_app_id) %>
+  <% application = @pet.application_lookup(@pet) %>
     <p>On hold for <%= link_to "#{application.name}", "/applications/#{application.id}" %></p>
   <% end %>
 

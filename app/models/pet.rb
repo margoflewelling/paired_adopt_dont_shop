@@ -14,4 +14,10 @@ class Pet < ApplicationRecord
   def shelter_name
     shelter.name
   end
+
+  def application_lookup(pet)
+    applications.find(pet.accepted_app_id)
+  end
+
+
 end

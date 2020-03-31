@@ -52,7 +52,7 @@ class PetsController < ApplicationController
   def submit_app
     @pet = Pet.find(params[:pet_id])
     @pet.update_attributes(:adoptable_status => "Pending Adoption")
-    @pet.update_attributes(:accepted_app_id => "#{params[:application_id]}")
+    @pet.update_attributes(:accepted_app_id => params[:application_id])
     redirect_to "/pets/#{@pet.id}"
   end
 

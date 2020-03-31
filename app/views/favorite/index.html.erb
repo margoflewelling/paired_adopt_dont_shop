@@ -5,7 +5,7 @@
       <p>"You have not selected any pets as favorites."</p>
     <% else %>
       <% favorite.favorite_pets.each do |pet_id| %>
-      <% pet = Pet.find(pet_id) %>
+      <% pet = pet_id_lookup(pet_id) %>
         <section class = "pet-<%="#{pet.id}"%>">
           <div>
             <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
@@ -22,7 +22,7 @@
   <br>
   <section id = "pending_applications"%>
     <h2>Pets Pending Adoption</h2>
-    <% Pet.all.each do |pet| %>
+    <% @pets.each do |pet| %>
       <% if pet.applications.size > 0 %>
         <%= link_to "#{pet.name}", "pets/#{pet.id}"  %>
       <% end %>

@@ -38,7 +38,7 @@ RSpec.describe Favorite, type: :model do
       favorite.remove(111)
       expect(favorite.favorite_pets).to eq(["1"])
     end
-  end 
+  end
 
 
 
