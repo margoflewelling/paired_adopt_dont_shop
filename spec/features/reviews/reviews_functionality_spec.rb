@@ -33,10 +33,10 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect(page).to have_content (@review_1.title)
     expect(page).to have_content (@review_1.rating)
     expect(page).to have_content (@review_1.content)
-    # expect(page).to have_css("img[src='/assets/hp-606612a36d3cc16d901e74616fbd73a568030910d171797aa44123d55a9bfa70.jpg']")
+    expect(page).to have_css("img[src='#{@review_1.image}']")
 
     expect(page).to_not have_content (@review_2.title)
-    expect(page).to_not have_content (@review_2.rating)
+    expect(page).to_not have_content (@review_2.content)
   end
 
   it "can add a new review for a shelter" do
@@ -52,7 +52,7 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     click_button "Save Review"
     expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
     expect(page).to have_content ("Andy's Test Review")
-    expect(page).to have_content (3)
+    expect(page).to have_content ("Rating: 3")
     expect(page).to have_content ("Lorem Ipsum dog stuff")
   end
 
@@ -64,8 +64,8 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     click_on "Save Review"
     within "#Review-#{@review_1.id}" do
       expect(page).to have_current_path("/shelters/#{@shelter_1.id}")
-      expect(page).to have_content (3)
-      expect(page).to_not have_content(5)
+      expect(page).to have_content ("Rating: 3")
+      expect(page).to_not have_content("Rating: 5")
     end
   end
 
@@ -105,6 +105,12 @@ RSpec.describe "Reviews index page - As a user", type: :feature do
     expect {click_on "Delete Shelter" }.to change(Review, :count).by(-1)
   end
 
+  it "defaults to an image if one is not provided" do
+    visit "shelters/#{@shelter_2.id}"
 
+    within "#Review-#{@review_2.id}" do
+      expect(page).to have_css("img[src='#{@review_2.image}']")
+    end
+  end
 
 end
