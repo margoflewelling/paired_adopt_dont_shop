@@ -93,4 +93,28 @@ RSpec.describe "PETS show page - A user", type: :feature do
 
     expect(page).to have_current_path("/applications/#{application_1.id}")
   end
+
+
+  it 'will have link to applicant pet is on hold for' do
+    application_1 = Application.create( name: "Andy",
+                                          address: "123 Main St",
+                                          city: "Denver",
+                                          state: "CO",
+                                          zip: "80220",
+                                          phone_number: "123-456-7890",
+                                          description: "I can has dogs.")
+    pet_application_1 = PetApplication.create(  pet_id: @pet_1.id,
+                                        application_id: application_1.id)
+
+    visit "/applications/#{application_1.id}"
+    within("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+
+    visit "/pets/#{@pet_1.id}"
+    expect(page).to have_link("#{application_1.name}")
+    expect(page).to have_content("On hold for #{application_1.name}")
+  end
+
+
 end

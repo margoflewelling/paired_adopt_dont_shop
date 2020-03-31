@@ -22,7 +22,7 @@
 
   <% if @pet.accepted_app_id %>
     <% application = Application.find(@pet.accepted_app_id) %>
-    <p> <%="On hold for #{application.name}" %> </p>
+    <p>On hold for <%= link_to "#{application.name}", "/applications/#{application.id}" %></p>
   <% end %>
 
 
