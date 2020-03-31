@@ -11,10 +11,6 @@ class Shelter < ApplicationRecord
     pets.select { |pet| pet.adoptable_status == "Pending Adoption"}
   end
 
-  def shelter_reviews
-    reviews.each { |review| review }
-  end
-
   def pet_count
     pets.select { |pet| pet.adoptable_status != "Adopted"}.length
   end
