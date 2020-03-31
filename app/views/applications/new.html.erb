@@ -3,7 +3,7 @@
   <%= form_tag("/applications/new", method: :post) do %>
   <p>Which pets would you like to submit this application for?</p>
   <% favorite.favorite_pets.each do |pet_id|%>
-  <% pet = Pet.find(pet_id) %>
+  <% pet = pet_id_lookup(pet_id) %>
   <%= label_tag pet.name %>
   <%= check_box_tag pet.id %> <br>
   <% end %>

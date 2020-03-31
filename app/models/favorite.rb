@@ -6,11 +6,7 @@ class Favorite
   end
 
   def total_count
-    if @favorite_pets.nil?
-      0
-    else
-      @favorite_pets.length
-    end
+    @favorite_pets.length
   end
 
   def add_favorite(pet_id)
@@ -20,4 +16,6 @@ class Favorite
   def remove(pet_id)
     favorite_pets.delete(pet_id.to_s)
   end
+
+
 end

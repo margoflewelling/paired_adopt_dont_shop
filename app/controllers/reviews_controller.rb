@@ -1,7 +1,4 @@
 class ReviewsController < ApplicationController
-  def index
-    @reviews = Review.all
-  end
 
   def new
     @shelter = Shelter.find(params[:shelter_id])
