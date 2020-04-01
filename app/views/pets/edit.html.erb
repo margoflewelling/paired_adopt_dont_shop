@@ -9,7 +9,7 @@
     <%= text_field_tag :age, @pet.age %>
     <br>
     <%= label_tag :sex %>
-    <%= text_field_tag :sex, @pet.sex %>
+    <%= select_tag "sex", options_for_select(["Male", "Female"], @pet.sex) %>
     <br>
     <%= label_tag :description %>
     <%= text_field_tag :description, @pet.description %>

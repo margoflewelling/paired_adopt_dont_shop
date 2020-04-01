@@ -27,7 +27,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
   it "can update a pet" do
     visit "/pets/#{@pet_1.id}/edit"
 
-    fill_in(:sex, :with => "Female")
+    select "Female", :from => "sex"
     fill_in(:description, :with => "You won't find any cuter!")
     fill_in(:image, :with => "hp2.jpg")
     click_button "Update Pet"
@@ -38,8 +38,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
     expect(page).to have_css("img[src='/assets/hp2-d54ec5938e641f10459be7bdba8fbb7fed849ec44ba2d1ed8568773d69bd164d.jpg']")
 
     visit "/pets/#{@pet_1.id}/edit"
-
-    fill_in(:sex, :with => "Male")
+    select "Male", :from => "sex"
     fill_in(:age, :with => 99)
     fill_in(:description, :with => "Likes to play fetch")
     click_button "Update Pet"
@@ -54,11 +53,11 @@ RSpec.describe "PETS show page - A user", type: :feature do
     visit "/pets/#{@pet_1.id}/edit"
 
     fill_in(:name, :with => nil)
-    fill_in(:sex, :with => nil)
+    fill_in(:description, :with => nil)
     fill_in(:age, :with => nil)
     click_button "Update Pet"
 
     expect(page).to have_current_path("/pets/#{@pet_1.id}/edit")
-    expect(page).to have_content("The following fields are incomplete: name, age, sex")
+    expect(page).to have_content("The following fields are incomplete: name, age, description")
   end
 end

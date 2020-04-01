@@ -48,8 +48,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
     click_link "Update Pet"
 
     expect(page).to have_current_path("/pets/#{@pet_1.id}/edit")
-
-    fill_in(:sex, :with => "Female")
+    select "Female", :from => "sex"
     fill_in(:description, :with => "You won't find any cuter!")
     fill_in(:image, :with => "hp2.jpg")
     click_button "Update Pet"

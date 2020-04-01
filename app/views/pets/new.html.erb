@@ -8,7 +8,7 @@
     <%= text_field_tag :age %>
     <br>
     <%= label_tag :sex %>
-    <%= text_field_tag :sex %>
+    <%= select_tag "sex", options_for_select(["Male", "Female"]) %>
     <br>
     <%= label_tag :description %>
     <%= text_field_tag :description %>
