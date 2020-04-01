@@ -2,7 +2,7 @@
   <section id = "favorite_pets"
     <h1>My Favorite Pets</h1>
     <% if favorite.favorite_pets == [] %>
-      <p>"You have not selected any pets as favorites."</p>
+      <p>You have not selected any pets as favorites.</p>
     <% else %>
       <% favorite.favorite_pets.each do |pet_id| %>
       <% pet = pet_id_lookup(pet_id) %>
@@ -23,7 +23,16 @@
   <section id = "pending_applications"%>
     <h2>Pets Pending Adoption</h2>
     <% @pets.each do |pet| %>
-      <% if pet.applications.size > 0 %>
+      <% if pet.applications.size > 0 && !pet.accepted_app_id %>
+        <%= link_to "#{pet.name}", "pets/#{pet.id}"  %>
+      <% end %>
+    <% end %>
+  </section>
+
+  <section id = "approved_applications"%>
+    <h2>Pets With Approved Adoption Applications</h2>
+    <% @pets.each do |pet| %>
+      <% if pet.accepted_app_id %>
         <%= link_to "#{pet.name}", "pets/#{pet.id}"  %>
       <% end %>
     <% end %>
