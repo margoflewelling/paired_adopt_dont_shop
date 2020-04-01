@@ -7,8 +7,10 @@
   <p> <%= "Number of applications on file at this shelter: #{@shelter.application_count}" %>
   <br>
   <h3 style="text-align:center;"><%= link_to "View Pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %></h3>
-
   <br>
+
+  <h3>Reviews for <%=@shelter.name%> </h3>
+
   <% @shelter.reviews.each do |review| %>
   <section id = <%="Review-#{review.id}" %>>
     <div style="margin-right:100px; margin-left:100px; margin-top:10px; border-style:solid; border-width:5px; border-color:#5D5C61;">
@@ -21,11 +23,12 @@
     </div>
   <% end %>
   <br>
+  <%= link_to "Add New Review", "/shelters/#{@shelter.id}/review/new" %>
+  <br> <br> <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>
   <br>
       <% if @shelter.pending_pets.length == 0 %>
       <%= link_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
     <% end %>
-  <%= link_to "Add New Review", "/shelters/#{@shelter.id}/review/new" %>
 
 </content>

@@ -1,6 +1,6 @@
 <content>
-  <section id = "favorite_pets"
-    <h1>My Favorite Pets</h1>
+  <section id = "favorite_pets" >
+    <h2>My Favorite Pets</h2>
     <% if favorite.favorite_pets == [] %>
       <p>You have not selected any pets as favorites.</p>
     <% else %>
@@ -8,7 +8,7 @@
       <% pet = pet_id_lookup(pet_id) %>
         <section class = "pet-<%="#{pet.id}"%>">
           <div>
-            <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
+            <h2><%= link_to "#{pet.name.upcase}", "pets/#{pet.id}" %></h2>
             <img src="<%=pet.image%>">
             <%= button_to "Unfavorite", "/favorite/#{pet.id}", params: { state: :index_redirect }, method: :delete %>
           </div>
@@ -17,14 +17,14 @@
     <% end %>
   </section>
   <br>
-  <%= button_to "Remove All Favorites", "/favorite", method: :delete %>
   <%= link_to "Adoption Application", "/applications/new", method: :get %>
+  <%= button_to "Remove All Favorites", "/favorite", method: :delete %>
   <br>
   <section id = "pending_applications"%>
     <h2>Pets Pending Adoption</h2>
     <% @pets.each do |pet| %>
       <% if pet.applications.size > 0 && !pet.accepted_app_id %>
-        <%= link_to "#{pet.name}", "pets/#{pet.id}"  %>
+        <%= link_to "#{pet.name.upcase}", "pets/#{pet.id}"  %>
       <% end %>
     <% end %>
   </section>
@@ -33,7 +33,7 @@
     <h2>Pets With Approved Adoption Applications</h2>
     <% @pets.each do |pet| %>
       <% if pet.accepted_app_id %>
-        <%= link_to "#{pet.name}", "pets/#{pet.id}"  %>
+        <%= link_to "#{pet.name.upcase}", "pets/#{pet.id}"  %>
       <% end %>
     <% end %>
   </section>
