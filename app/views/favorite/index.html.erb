@@ -25,6 +25,7 @@
     <% @pets.each do |pet| %>
       <% if pet.applications.size > 0 && !pet.accepted_app_id %>
         <%= link_to "#{pet.name.upcase}", "pets/#{pet.id}"  %>
+        <br>
       <% end %>
     <% end %>
   </section>
@@ -34,6 +35,7 @@
     <% @pets.each do |pet| %>
       <% if pet.accepted_app_id %>
         <%= link_to "#{pet.name.upcase}", "pets/#{pet.id}"  %>
+        <br>
       <% end %>
     <% end %>
   </section>
