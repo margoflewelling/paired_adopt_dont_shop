@@ -1,6 +1,9 @@
 <content>
   <h1>New Application</h1>
   <%= form_tag("/applications/new", method: :post) do %>
+  <% if favorite.favorite_pets.length == 0 %>
+    <p>You have no favorite pets to submit an application for.</p>
+  <% else %>
   <p>Which pets would you like to submit this application for?</p>
   <% favorite.favorite_pets.each do |pet_id|%>
   <% pet = pet_id_lookup(pet_id) %>
@@ -30,5 +33,6 @@
     <%= text_field_tag :description %>
     <br>
     <%= button_tag 'Submit Application' %>
+  <% end %>
   <% end %>
 </content>
