@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
     Pet.find(pet_id)
   end
 
+  def missing_fields(params)
+    empty_fields = params.select {|k,v| v == ""}.keys
+    empty_fields.join(", ")
+  end
+
 end

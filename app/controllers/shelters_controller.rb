@@ -11,8 +11,7 @@ class SheltersController < ApplicationController
     if shelter.save
       redirect_to "/shelters/#{shelter.id}"
     else
-      missing_fields = shelter_params.select {|k,v| v == ""}.keys
-      flash.now[:notice] = "You need to complete the #{missing_fields.join(", ")} information"
+      flash.now[:notice] = "You need to complete the #{missing_fields(shelter_params)} information"
       render :new
     end
   end
@@ -27,9 +26,8 @@ class SheltersController < ApplicationController
 
   def update
     @shelter = Shelter.find(params[:shelter_id])
-    missing_fields = shelter_params.select {|k,v| v == ""}.keys
-    if missing_fields.length > 0
-      flash.now[:notice] = "You need to complete the #{missing_fields.join(", ")} information"
+    if missing_fields(shelter_params).length > 0
+      flash.now[:notice] = "You need to complete the #{missing_fields(shelter_params)} information"
       render :edit
     else
       @shelter.update(shelter_params)
