@@ -60,11 +60,6 @@ class PetsController < ApplicationController
     redirect_to "/applications/#{params[:application_id]}"
   end
 
-  def missing_fields(params)
-    empty_fields = params.select {|k,v| v == ""}.keys
-    empty_fields.join(", ")
-  end
-
   private
 
   def pet_params
