@@ -1,0 +1,21 @@
+<content>
+  <h1>New Review</h1>
+  <%= form_tag("/shelters/#{@shelter.id}/review/new", method: :post) do %>
+    <%= label_tag :title %>
+    <%= text_field_tag :title %>
+    <br>
+    <br>
+    <%= label_tag :rating %>
+    <%= select_tag "rating", options_for_select([0,1,2,3,4,5]) %>
+    <br>
+    <br>
+    <%= label_tag :content %>
+    <%= text_field_tag :content %>
+    <br>
+    <br>
+    <%= label_tag :image %>
+    <%= text_field_tag :image %>
+    <br>
+    <%= submit_tag 'Save Review' %>
+  <% end %>
+</content>

@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200321150247) do
+ActiveRecord::Schema.define(version: 20200330200926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone_number"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pet_applications", force: :cascade do |t|
+    t.bigint "pet_id"
+    t.bigint "application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_pet_applications_on_application_id"
+    t.index ["pet_id"], name: "index_pet_applications_on_pet_id"
+  end
 
   create_table "pets", force: :cascade do |t|
     t.string "name"
@@ -25,7 +46,19 @@ ActiveRecord::Schema.define(version: 20200321150247) do
     t.string "image"
     t.string "adoptable_status"
     t.string "description"
+    t.string "accepted_app_id"
     t.index ["shelter_id"], name: "index_pets_on_shelter_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.string "image"
+    t.bigint "shelter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "rating"
+    t.index ["shelter_id"], name: "index_reviews_on_shelter_id"
   end
 
   create_table "shelters", force: :cascade do |t|
@@ -36,5 +69,8 @@ ActiveRecord::Schema.define(version: 20200321150247) do
     t.string "state"
   end
 
+  add_foreign_key "pet_applications", "applications"
+  add_foreign_key "pet_applications", "pets"
   add_foreign_key "pets", "shelters"
+  add_foreign_key "reviews", "shelters"
 end

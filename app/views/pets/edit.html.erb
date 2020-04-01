@@ -1,13 +1,3 @@
-<nav>
-  <ul class="nav_list">
-    <li class="nav_link">
-      <%= link_to "All Pets", "/pets" %>
-    </li>
-    <li class="nav_link">
-      <%= link_to "All Shelters", "/shelters" %>
-    </li>
-  </ul>
-</nav>
 <content>
   <h1>Update Pet</h1>
 
@@ -19,13 +9,10 @@
     <%= text_field_tag :age, @pet.age %>
     <br>
     <%= label_tag :sex %>
-    <%= text_field_tag :sex, @pet.sex %>
+    <%= select_tag "sex", options_for_select(["Male", "Female"], @pet.sex) %>
     <br>
     <%= label_tag :description %>
     <%= text_field_tag :description, @pet.description %>
-    <br>
-    <%= label_tag :adoptable_status %>
-    <%= text_field_tag :adoptable_status, @pet.adoptable_status %>
     <br>
     <%= label_tag :image %>
     <%= text_field_tag :image, @pet.image %>

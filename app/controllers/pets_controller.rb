@@ -5,56 +5,68 @@ class PetsController < ApplicationController
   end
 
   def new
-    @shelter = Shelter.find(params[:id])
+    @shelter = Shelter.find(params[:shelter_id])
   end
 
   def create
-    pet = Pet.new({
-                    name: create_params[:name],
-                    age: create_params[:age],
-                    sex: create_params[:sex],
-                    description: create_params[:description],
-                    image: create_params[:image],
-                    adoptable_status: "Adoptable",
-                    shelter_id: create_params[:id]
-                  })
-    pet.save
-    redirect_to "/shelters/#{create_params[:id]}/pets"
+    shelter = Shelter.find(params[:shelter_id])
+    pet = shelter.pets.create(pet_params)
+    pet.adoptable_status = "Adoptable"
+    if pet.save
+      redirect_to "/shelters/#{params[:shelter_id]}/pets"
+    else
+      flash[:notice] = "The following fields are incomplete: #{missing_fields(validate_params)}"
+      redirect_to "/shelters/#{shelter.id}/pets/new"
+    end
   end
 
   def show
-    @pet = Pet.find(params[:id])
+    @pet = Pet.find(params[:pet_id])
+
   end
 
   def edit
-    @pet = Pet.find(params[:id])
+    @pet = Pet.find(params[:pet_id])
   end
 
   def update
-    pet = Pet.find(params[:id])
-    pet[:name] = update_params[:name]
-    pet[:age] = update_params[:age]
-    pet[:sex] = update_params[:sex]
-    pet[:description] = update_params[:description]
-    pet[:image] = update_params[:image]
-    pet[:adoptable_status] = update_params[:adoptable_status]
-
-    pet.save
-    redirect_to "/pets/#{pet.id}"
+    pet = Pet.find(params[:pet_id])
+    if missing_fields(validate_params).length > 0
+      flash[:notice] = "The following fields are incomplete: #{missing_fields(validate_params)}"
+      redirect_to "/pets/#{pet.id}/edit"
+    else
+      pet.update(pet_params)
+      redirect_to "/pets/#{pet.id}"
+    end
   end
 
   def destroy
-    Pet.destroy(params[:id])
+    Pet.destroy(params[:pet_id])
+    favorite.remove(params[:pet_id])
     redirect_to "/pets"
+  end
+
+  def submit_app
+    @pet = Pet.find(params[:pet_id])
+    @pet.update_attributes(:adoptable_status => "Pending Adoption")
+    @pet.update_attributes(:accepted_app_id => params[:application_id])
+    redirect_to "/pets/#{@pet.id}"
+  end
+
+  def revoke_app
+    @pet = Pet.find(params[:pet_id])
+    @pet.update_attributes(:adoptable_status => "Adoptable")
+    @pet.update_attributes(:accepted_app_id => nil)
+    redirect_to "/applications/#{params[:application_id]}"
   end
 
   private
 
-  def create_params
-    params.permit(:name, :age, :sex, :description, :image, :id)
+  def pet_params
+    params.permit(:name, :age, :sex, :description, :image, :id, :adoptable_status, :accepted_app_id)
   end
 
-  def update_params
-    params.permit(:name, :age, :sex, :description, :image, :adoptable_status)
+  def validate_params
+    params.permit(:name, :age, :sex, :description, :image)
   end
 end

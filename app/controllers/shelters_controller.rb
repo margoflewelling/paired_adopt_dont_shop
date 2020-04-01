@@ -7,50 +7,48 @@ class SheltersController < ApplicationController
   def new; end
 
   def create
-    shelter = Shelter.new({
-                    name: create_params[:name],
-                    address: create_params[:address],
-                    city: create_params[:city],
-                    state: create_params[:state],
-                    zip: create_params[:zip]
-                  })
-    shelter.save
-    redirect_to "/shelters/#{shelter.id}"
+    shelter = Shelter.create(shelter_params)
+    if shelter.save
+      redirect_to "/shelters/#{shelter.id}"
+    else
+      flash.now[:notice] = "You need to complete the #{missing_fields(shelter_params)} information"
+      render :new
+    end
   end
 
   def show
-    @shelter = Shelter.find(params[:id])
+    @shelter = Shelter.find(params[:shelter_id])
   end
 
   def edit
-    @shelter = Shelter.find(params[:id])
+    @shelter = Shelter.find(params[:shelter_id])
   end
 
   def update
-    shelter = Shelter.find(params[:id])
-    shelter[:name] = update_params[:name]
-    shelter[:address] = update_params[:address]
-    shelter[:city] = update_params[:city]
-    shelter[:state] = update_params[:state]
-    shelter[:zip] = update_params[:zip]
-    shelter.save
-    redirect_to "/shelters/#{shelter.id}"
+    @shelter = Shelter.find(params[:shelter_id])
+    if missing_fields(shelter_params).length > 0
+      flash.now[:notice] = "You need to complete the #{missing_fields(shelter_params)} information"
+      render :edit
+    else
+      @shelter.update(shelter_params)
+      redirect_to "/shelters/#{@shelter.id}"
+    end
   end
 
   def destroy
-    Shelter.find(params[:id]).pets.each { |pet| pet.destroy }
-    Shelter.destroy(params[:id])
+    shelter = Shelter.find(params[:shelter_id])
+    shelter.pets.each do |pet|
+      pet.pet_applications.destroy_all
+      pet.destroy
+     end
+    shelter.reviews.destroy_all
+    Shelter.destroy(params[:shelter_id])
     redirect_to "/shelters"
   end
 
   private
 
-  def create_params
+  def shelter_params
     params.permit(:name, :address, :city, :state, :zip)
   end
-
-  def update_params
-    params.permit(:name, :address, :city, :state, :zip)
-  end
-
 end

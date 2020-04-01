@@ -26,7 +26,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
   it "can see the details of a specific pet" do
     visit "/pets/#{@pet_1[:id]}"
 
-    expect(page).to have_content(@pet_1.name)
+    expect(page).to have_content(@pet_1.name.upcase)
     expect(page).to have_content(@pet_1.description)
     expect(page).to have_content(@pet_1.age)
     expect(page).to have_content(@pet_1.sex)
@@ -35,7 +35,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
 
     visit "/pets/#{@pet_2[:id]}"
 
-    expect(page).to have_content(@pet_2.name)
+    expect(page).to have_content(@pet_2.name.upcase)
     expect(page).to have_content(@pet_2.description)
     expect(page).to have_content(@pet_2.age)
     expect(page).to have_content(@pet_2.sex)
@@ -48,8 +48,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
     click_link "Update Pet"
 
     expect(page).to have_current_path("/pets/#{@pet_1.id}/edit")
-
-    fill_in(:sex, :with => "Female")
+    select "Female", :from => "sex"
     fill_in(:description, :with => "You won't find any cuter!")
     fill_in(:image, :with => "hp2.jpg")
     click_button "Update Pet"
@@ -71,4 +70,50 @@ RSpec.describe "PETS show page - A user", type: :feature do
     expect(page).to have_current_path("/pets")
     expect(page).to_not have_content(@pet_1.name)
   end
+
+  it "can see applications for a pet" do
+    application_1 = Application.create( name: "Andy",
+                                          address: "123 Main St",
+                                          city: "Denver",
+                                          state: "CO",
+                                          zip: "80220",
+                                          phone_number: "123-456-7890",
+                                          description: "I can has dogs.")
+    pet_application_1 = PetApplication.create(  pet_id: @pet_1.id,
+                                                  application_id: application_1.id)
+
+    visit "/pets/#{@pet_1.id}"
+    click_link "View All Applications"
+
+    expect(page).to have_current_path("/pets/#{@pet_1.id}/applications")
+    expect(page). to have_content(application_1.name)
+
+    click_link "#{application_1.name}"
+
+    expect(page).to have_current_path("/applications/#{application_1.id}")
+  end
+
+
+  it 'will have link to applicant pet is on hold for' do
+    application_1 = Application.create( name: "Andy",
+                                          address: "123 Main St",
+                                          city: "Denver",
+                                          state: "CO",
+                                          zip: "80220",
+                                          phone_number: "123-456-7890",
+                                          description: "I can has dogs.")
+    pet_application_1 = PetApplication.create(  pet_id: @pet_1.id,
+                                        application_id: application_1.id)
+
+    visit "/applications/#{application_1.id}"
+    within("##{@pet_1.id}") do
+      click_link "Approve application for #{@pet_1.name}"
+    end
+
+    visit "/pets/#{@pet_1.id}"
+    expect(page).to have_link("#{application_1.name}")
+    expect(page).to have_content("On hold for #{application_1.name}")
+  end
+
+
 end

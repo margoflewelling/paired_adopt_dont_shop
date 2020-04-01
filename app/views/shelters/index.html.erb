@@ -1,13 +1,3 @@
-<nav>
-  <ul class="nav_list">
-    <li class="nav_link">
-      <%= link_to "All Pets", "/pets" %>
-    </li>
-    <li class="nav_link">
-      <%= link_to "All Shelters", "/shelters" %>
-    </li>
-  </ul>
-</nav>
 <content>
   <h1>All Shelters</h1>
   <% @shelters.each do |shelter| %>
@@ -15,7 +5,9 @@
       <div>
         <div class="index_listing"><%= link_to "#{shelter.name}", "/shelters/#{shelter.id}" %></div>
         <%= link_to "Edit Shelter", "/shelters/#{shelter.id}/edit" %>
-        <%= link_to "Delete Shelter", "/shelters/#{shelter.id}", method: :delete %>
+        <% if shelter.pending_pets.length == 0 %>
+          <%= link_to "Delete Shelter", "/shelters/#{shelter.id}", method: :delete %>
+          <% end %>
         <br>
         <br>
       </div>
@@ -24,4 +16,5 @@
   <br>
   <br>
   <%= link_to "New Shelter", "/shelters/new" %>
+
 </content>

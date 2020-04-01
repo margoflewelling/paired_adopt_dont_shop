@@ -1,0 +1,10 @@
+<h2>People applying to give <%=link_to "#{@pet.name.upcase}", "/pets/#{@pet.id}"%> a furever home </h2>
+
+<% if @pet.applications == [] %>
+  <p><%="Nobody has applied to adopt #{@pet.name.upcase}. :("%></p>
+<% else %>
+  <% @pet.applications.each do |app| %>
+    <%= link_to "#{app.name}", "/applications/#{app.id}" %>
+    <br>
+  <% end %>
+<% end %>
