@@ -3,11 +3,14 @@
   <p> <%= "Number of pets living at this shelter: #{@shelter.pet_count}" %>
   <p> <%= "Average rating of this shelter: #{@shelter.average_rating.round(1)}" %>
   <p> <%= "Number of applications on file at this shelter: #{@shelter.application_count}" %>
-
+<br> <br>
   <%= link_to "View Pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
-  <p><%= @shelter.address %></p>
+  <p> Address: <br> <%= @shelter.address %></p>
   <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
   <br>
+
+  <h3>Reviews for <%=@shelter.name%> </h3>
+
   <% @shelter.reviews.each do |review| %>
   <section id = <%="Review-#{review.id}" %>>
     <div>
@@ -20,11 +23,12 @@
       <%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete %>
   <% end %>
   <br>
+  <%= link_to "Add New Review", "/shelters/#{@shelter.id}/review/new" %>
+  <br> <br> <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>
   <br>
       <% if @shelter.pending_pets.length == 0 %>
       <%= link_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
     <% end %>
-  <%= link_to "Add New Review", "/shelters/#{@shelter.id}/review/new" %>
 
 </content>

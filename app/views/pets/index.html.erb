@@ -3,10 +3,10 @@
   <% @pets.each do |pet| %>
     <section id = <%="#{pet.id}" %>>
       <div>
-        <h2><%= link_to "#{pet.name}", "pets/#{pet.id}" %></h2>
-        <p><%= pet.age.to_s %></p>
-        <p><%= pet.sex %></p>
-        <p><%= link_to "#{pet.shelter_name}", "/shelters/#{pet.shelter_id}" %></p>
+        <h2><%= link_to "#{pet.name.upcase}", "pets/#{pet.id}" %></h2>
+        <p>Age: <%= pet.age.to_s %></p>
+        <p>Sex: <%= pet.sex %></p>
+        <p>Currently at: <%= link_to "#{pet.shelter_name}", "/shelters/#{pet.shelter_id}" %></p>
         <%= image_tag(image_path(pet.image)) %>
         <%= link_to "Edit Pet", "/pets/#{pet.id}/edit" %>
         <% if pet.adoptable_status == "Adoptable" %>
