@@ -40,6 +40,12 @@ RSpec.describe Favorite, type: :model do
     end
   end
 
+  describe "#initialize" do
+    it "can initialize an empty favorites if it doesn't exist" do
+      favorite = Favorite.new([])
+      expect(favorite.favorite_pets).to eq([])
+    end
+  end
 
 
 end
