@@ -1,23 +1,24 @@
 <content>
   <h1><%= @shelter.name %></h1>
+  <h3 style="text-align:center;"><%= @shelter.address %></h3>
+  <h3 style="text-align:center;"><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></h3>
   <p> <%= "Number of pets living at this shelter: #{@shelter.pet_count}" %>
   <p> <%= "Average rating of this shelter: #{@shelter.average_rating.round(1)}" %>
   <p> <%= "Number of applications on file at this shelter: #{@shelter.application_count}" %>
+  <br>
+  <h3 style="text-align:center;"><%= link_to "View Pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %></h3>
 
-  <%= link_to "View Pets at #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
-  <p><%= @shelter.address %></p>
-  <p><%= "#{@shelter.city}, #{@shelter.state}  #{@shelter.zip}" %></p>
   <br>
   <% @shelter.reviews.each do |review| %>
   <section id = <%="Review-#{review.id}" %>>
-    <div>
-      <p>Review Title: <%= review.title %></p>
+    <div style="margin-right:100px; margin-left:100px; margin-top:10px; border-style:solid; border-width:5px; border-color:#5D5C61;">
+      <h4 style="text-align:center;">Review Title: <%= review.title %></h4>
       <p>Rating: <%= review.rating %></p>
       <p>Content: <%= review.content %></p>
       <img src="<%=review.image%>">
-
       <%= link_to "Edit Review", "/shelters/#{@shelter.id}/#{review.id}/edit" %>
       <%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete %>
+    </div>
   <% end %>
   <br>
   <%= link_to "Update Shelter", "/shelters/#{@shelter.id}/edit" %>
