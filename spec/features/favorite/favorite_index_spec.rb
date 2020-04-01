@@ -33,11 +33,11 @@ RSpec.describe "Favorites Index - A user", type: :feature do
 
     visit "/favorite"
     within ".pet-#{@pet_1.id}" do
-      expect(page).to have_content(@pet_1.name)
+      expect(page).to have_content(@pet_1.name.upcase)
       expect(page).to have_css("img[src='#{@pet_1.image}']")
     end
 
-    click_link("#{@pet_1.name}")
+    click_link("#{@pet_1.name.upcase}")
     expect(page).to have_current_path("/pets/#{@pet_1.id}")
   end
 
@@ -114,8 +114,8 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     visit "/favorite"
 
     within "#pending_applications" do
-      expect(page).to have_link("#{@pet_1.name}")
-      expect(page).to_not have_link("#{@pet_2.name}")
+      expect(page).to have_link("#{@pet_1.name.upcase}")
+      expect(page).to_not have_link("#{@pet_2.name.upcase}")
     end
   end
 
@@ -150,8 +150,8 @@ RSpec.describe "Favorites Index - A user", type: :feature do
     visit "/favorite"
 
     within "#approved_applications" do
-      expect(page).to have_link("#{@pet_1.name}")
-      expect(page).to_not have_link("#{@pet_2.name}")
+      expect(page).to have_link("#{@pet_1.name.upcase}")
+      expect(page).to_not have_link("#{@pet_2.name.upcase}")
     end
   end
 

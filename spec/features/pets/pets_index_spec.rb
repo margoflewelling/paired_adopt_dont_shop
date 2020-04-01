@@ -28,8 +28,8 @@ RSpec.describe "PETS index page - A user", type: :feature do
 
     visit "/pets"
 
-    expect(page).to have_content(@pet_1.name)
-    expect(page).to have_content(@pet_2.name)
+    expect(page).to have_content(@pet_1.name.upcase)
+    expect(page).to have_content(@pet_2.name.upcase)
     expect(page).to have_content(@pet_1.age)
     expect(page).to have_content(@pet_2.age)
     expect(page).to have_content(@pet_1.sex)
@@ -91,14 +91,14 @@ RSpec.describe "PETS index page - A user", type: :feature do
   it "can click to show the pet" do
     visit "/pets"
     within("##{@pet_1.id}") do
-      click_link "#{@pet_1.name}"
+      click_link "#{@pet_1.name.upcase}"
     end
 
     expect(page).to have_current_path("/pets/#{@pet_1.id}")
 
     visit "/pets"
     within("##{@pet_2.id}") do
-      click_link "#{@pet_2.name}"
+      click_link "#{@pet_2.name.upcase}"
     end
 
     expect(page).to have_current_path("/pets/#{@pet_2.id}")

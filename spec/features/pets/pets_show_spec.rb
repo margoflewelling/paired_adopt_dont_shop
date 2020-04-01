@@ -26,7 +26,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
   it "can see the details of a specific pet" do
     visit "/pets/#{@pet_1[:id]}"
 
-    expect(page).to have_content(@pet_1.name)
+    expect(page).to have_content(@pet_1.name.upcase)
     expect(page).to have_content(@pet_1.description)
     expect(page).to have_content(@pet_1.age)
     expect(page).to have_content(@pet_1.sex)
@@ -35,7 +35,7 @@ RSpec.describe "PETS show page - A user", type: :feature do
 
     visit "/pets/#{@pet_2[:id]}"
 
-    expect(page).to have_content(@pet_2.name)
+    expect(page).to have_content(@pet_2.name.upcase)
     expect(page).to have_content(@pet_2.description)
     expect(page).to have_content(@pet_2.age)
     expect(page).to have_content(@pet_2.sex)
