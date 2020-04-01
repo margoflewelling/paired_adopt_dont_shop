@@ -14,9 +14,6 @@
     <%= label_tag :description %>
     <%= text_field_tag :description, @pet.description %>
     <br>
-    <%= label_tag :adoptable_status %>
-    <%= select_tag "adoptable_status", options_for_select(["Adoptable", "Adopted", "Pending Adoption"], @pet.sex) %>
-    <br>
     <%= label_tag :image %>
     <%= text_field_tag :image, @pet.image %>
     <br>
